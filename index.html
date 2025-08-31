@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Acme — Modern, Minimal Website</title>
+  <meta name="description" content="A modern, minimal, fully responsive single‑file website template." />
+  <meta name="theme-color" content="#0f172a" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Acme — Modern, Minimal Website" />
+  <meta property="og:description" content="A modern, minimal, fully responsive single‑file website template." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'><rect width='120' height='120' fill='%230f172a'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='white' font-family='Arial' font-size='48'>A</text></svg>" />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'><rect width='120' height='120' rx='24' fill='%230f172a'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='white' font-family='Arial' font-size='64'>A</text></svg>">
+
+  <style>
+    :root{
+      --bg: #0b1220;        /* page background (dark) */
+      --panel: #0f172a;     /* card background */
+      --muted: #94a3b8;     /* text muted */
+      --text: #e5e7eb;      /* text */
+      --brand: #22d3ee;     /* accent */
+      --brand-2: #a78bfa;   /* secondary accent */
+      --ring: rgba(34,211,238,.45);
+      --shadow: 0 10px 30px rgba(2,8,23,.45);
+      --radius: 18px;
+      --container: 1200px;
+    }
+    @media (prefers-color-scheme: light){
+      :root{ --bg:#f8fafc; --panel:#ffffff; --text:#0f172a; --muted:#475569; --ring:rgba(76,0,255,.25); box-shadow: none; }
+      body{ background:var(--bg); color:var(--text); }
+    }
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; scroll-behavior:smooth; }
+    body{ margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji"; background:var(--bg); color:var(--text); }
+    a{ color:inherit; text-decoration:none; }
+    img{ max-width:100%; height:auto; display:block; }
+    .container{ width:min(100% - 2rem, var(--container)); margin-inline:auto; }
+    .btn{ display:inline-flex; align-items:center; gap:.5rem; padding:.85rem 1.1rem; border-radius:14px; border:1px solid transparent; background:linear-gradient(135deg,var(--brand),var(--brand-2)); color:#0b1220; font-weight:700; box-shadow:var(--shadow); transition:transform .15s ease, filter .2s ease; }
+    .btn:hover{ transform:translateY(-2px); filter:saturate(1.1); }
+    .btn.ghost{ background:transparent; color:var(--text); border-color:rgba(148,163,184,.3); box-shadow:none; }
+    .btn.ghost:hover{ border-color:var(--brand); }
+
+    /* Header */
+    header{ position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(8px); background:linear-gradient(180deg, rgba(15,23,42,.85), rgba(15,23,42,.55) 50%, transparent); border-bottom:1px solid rgba(148,163,184,.15); }
+    .nav{ display:flex; align-items:center; justify-content:space-between; padding: .8rem 0; }
+    .logo{ display:flex; align-items:center; gap:.6rem; font-weight:800; letter-spacing:.2px; }
+    .logo-badge{ width:34px; height:34px; border-radius:12px; background:linear-gradient(135deg,var(--brand-2),var(--brand)); display:grid; place-items:center; color:#0b1220; font-weight:900; }
+    nav ul{ list-style:none; display:flex; gap:1rem; padding:0; margin:0; }
+    nav a{ opacity:.9; padding:.5rem .75rem; border-radius:10px; }
+    nav a:hover, nav a:focus{ background:rgba(148,163,184,.15); outline:none; }
+    .menu-btn{ display:none; }
+
+    /* Hero */
+    .hero{ padding: clamp(4rem, 8vw, 8rem) 0 3rem; }
+    .hero-grid{ display:grid; grid-template-columns: 1.2fr 1fr; gap:2rem; align-items:center; }
+    .eyebrow{ display:inline-flex; align-items:center; gap:.5rem; padding:.35rem .6rem; border-radius:999px; background:rgba(34,211,238,.15); border:1px solid rgba(34,211,238,.2); color:var(--brand); font-weight:700; font-size:.85rem; }
+    h1{ font-size:clamp(2rem, 4vw + .5rem, 3.25rem); line-height:1.1; margin:.75rem 0 1rem; letter-spacing:.2px; }
+    .lead{ font-size:clamp(1rem, 1.2vw + .5rem, 1.25rem); color:var(--muted); max-width:55ch; }
+    .hero-actions{ display:flex; gap:1rem; margin-top:1.5rem; flex-wrap:wrap; }
+    .card{ background:var(--panel); border:1px solid rgba(148,163,184,.12); border-radius:var(--radius); padding:1.2rem; box-shadow:var(--shadow); }
+
+    /* Feature grid */
+    .features{ padding: 3rem 0; }
+    .grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:1rem; }
+    .feature{ padding:1.25rem; }
+    .feature h3{ margin:.75rem 0 .25rem; }
+    .kicker{ color:var(--brand); font-weight:800; letter-spacing:.12em; text-transform:uppercase; font-size:.8rem; }
+
+    /* Showcase */
+    .showcase{ padding: 3rem 0; display:grid; grid-template-columns: 1.2fr 1fr; gap:1rem; align-items:stretch; }
+    .mock{ aspect-ratio: 16/10; border-radius:var(--radius); overflow:hidden; border:1px solid rgba(148,163,184,.15); }
+    .mock .bar{ display:flex; gap:.4rem; padding:.6rem; background:rgba(148,163,184,.1); }
+    .dot{ width:.7rem; height:.7rem; border-radius:999px; background:rgba(148,163,184,.35); }
+
+    /* Pricing */
+    .pricing{ padding:3rem 0; }
+    .pricing-cards{ display:grid; grid-template-columns: repeat(3, 1fr); gap:1rem; align-items:stretch; }
+    .price{ font-size:2rem; font-weight:900; }
+    .plan ul{ margin: .5rem 0 0; padding-left:1.1rem; color:var(--muted); }
+
+    /* CTA */
+    .cta{ padding:3rem 0; text-align:center; }
+
+    /* Footer */
+    footer{ border-top:1px solid rgba(148,163,184,.15); padding:2rem 0 3rem; color:var(--muted); }
+
+    /* Responsive */
+    @media (max-width: 960px){
+      .hero-grid, .showcase{ grid-template-columns: 1fr; }
+      .grid{ grid-template-columns: 1fr 1fr; }
+      .pricing-cards{ grid-template-columns: 1fr; }
+      nav ul{ position:fixed; inset:60px 1rem auto 1rem; background:var(--panel); border:1px solid rgba(148,163,184,.2); border-radius:16px; padding:1rem; display:none; flex-direction:column; gap:.25rem; box-shadow:var(--shadow); }
+      .menu-btn{ display:inline-flex; align-items:center; gap:.5rem; }
+      .nav.open ul{ display:flex; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *{ animation:none !important; transition:none !important; }
+    }
+
+    /* Utilities */
+    .stack{ display:flex; flex-direction:column; gap: .75rem; }
+    .row{ display:flex; gap:.75rem; flex-wrap:wrap; }
+    .muted{ color:var(--muted); }
+    .center{ text-align:center; }
+  </style>
+</head>
+<body>
+  <!-- ===== Header ===== -->
+  <header>
+    <div class="container nav" id="top">
+      <a href="#top" class="logo" aria-label="Acme Home">
+        <span class="logo-badge" aria-hidden="true">A</span>
+        <span>Acme</span>
+      </a>
+      <button class="btn ghost menu-btn" aria-expanded="false" aria-controls="menu" id="menuToggle">☰ Menu</button>
+      <nav id="menu" aria-label="Primary">
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#showcase">Showcase</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow" role="img" aria-label="sparkles">✨ New</span>
+        <h1>Build a clean, fast site in minutes.</h1>
+        <p class="lead">This single‑file template gives you a sleek, accessible starting point: semantic HTML, responsive layout, and a sprinkle of modern flair—no frameworks required.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#pricing">Get Started</a>
+          <a class="btn ghost" href="#features">See Features</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="stack">
+          <strong>What you get</strong>
+          <ul class="muted">
+            <li>✔️ Responsive grid & utilities</li>
+            <li>✔️ Accessible navigation</li>
+            <li>✔️ Pricing, features, contact</li>
+            <li>✔️ Light/dark mode friendly</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Features ===== -->
+  <section class="features" id="features" aria-labelledby="features-title">
+    <div class="container">
+      <p class="kicker">Features</p>
+      <h2 id="features-title">Thoughtful basics that scale</h2>
+      <div class="grid">
+        <article class="card feature">
+          <h3>Performance‑first</h3>
+          <p class="muted">No render‑blocking fonts or frameworks. Just clean, modern CSS and HTML.</p>
+        </article>
+        <article class="card feature">
+          <h3>Accessible</h3>
+          <p class="muted">Semantic landmarks, high contrast, focus states, and motion‑safe defaults.</p>
+        </article>
+        <article class="card feature">
+          <h3>Customizable</h3>
+          <p class="muted">Swap colors, tweak radius, and adjust layouts via a few CSS variables.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Showcase ===== -->
+  <section class="showcase container" id="showcase" aria-labelledby="showcase-title">
+    <div>
+      <p class="kicker">Showcase</p>
+      <h2 id="showcase-title">Your product, beautifully framed</h2>
+      <p class="muted">A simple mock browser to present screenshots or hero shots. Replace the placeholder below with your image.</p>
+      <div class="row" style="margin-top:1rem">
+        <a class="btn" href="#contact">Book a demo</a>
+        <a class="btn ghost" href="#pricing">Compare plans</a>
+      </div>
+    </div>
+    <div class="card mock" aria-label="Screenshot mockup">
+      <div class="bar" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+      <img src="https://picsum.photos/1200/720" alt="Placeholder product screenshot" />
+    </div>
+  </section>
+
+  <!-- ===== Pricing ===== -->
+  <section class="pricing" id="pricing" aria-labelledby="pricing-title">
+    <div class="container">
+      <p class="kicker">Pricing</p>
+      <h2 id="pricing-title">Simple, honest plans</h2>
+      <div class="pricing-cards">
+        <article class="card plan">
+          <h3>Starter</h3>
+          <p class="muted">For personal projects</p>
+          <p class="price">$0<span class="muted">/mo</span></p>
+          <ul>
+            <li>Basic components</li>
+            <li>Email support</li>
+            <li>Community access</li>
+          </ul>
+          <p><a class="btn" href="#contact">Choose Starter</a></p>
+        </article>
+        <article class="card plan" style="border-color: rgba(34,211,238,.45)">
+          <h3>Pro</h3>
+          <p class="muted">For growing teams</p>
+          <p class="price">$19<span class="muted">/mo</span></p>
+          <ul>
+            <li>Everything in Starter</li>
+            <li>Unlimited projects</li>
+            <li>Priority support</li>
+          </ul>
+          <p><a class="btn" href="#contact">Choose Pro</a></p>
+        </article>
+        <article class="card plan">
+          <h3>Enterprise</h3>
+          <p class="muted">For large orgs</p>
+          <p class="price">Custom</p>
+          <ul>
+            <li>SSO & advanced security</li>
+            <li>Dedicated CSM</li>
+            <li>Custom SLAs</li>
+          </ul>
+          <p><a class="btn" href="#contact">Talk to sales</a></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="cta">
+    <div class="container card">
+      <div class="stack center">
+        <h2>Ready to launch?</h2>
+        <p class="muted">Copy this file, change the text, and deploy anywhere—GitHub Pages, Netlify, Vercel, your pick.</p>
+        <p><a class="btn" href="#contact">Get in touch</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Contact ===== -->
+  <section class="container" id="contact" aria-labelledby="contact-title" style="padding:2rem 0 3rem;">
+    <div class="card">
+      <h2 id="contact-title">Contact us</h2>
+      <p class="muted">Have questions? Send a message and we'll reply soon.</p>
+      <form class="stack" onsubmit="event.preventDefault();alert('Thanks! This demo form does not submit.');" aria-describedby="privacy-note">
+        <div class="row">
+          <label class="stack" style="flex:1; min-width:220px;">
+            <span>Name</span>
+            <input required name="name" placeholder="Ada Lovelace" />
+          </label>
+          <label class="stack" style="flex:1; min-width:220px;">
+            <span>Email</span>
+            <input required name="email" type="email" placeholder="you@example.com" />
+          </label>
+        </div>
+        <label class="stack">
+          <span>Message</span>
+          <textarea required name="message" rows="5" placeholder="Tell us a little bit about your project…"></textarea>
+        </label>
+        <div class="row" style="align-items:center; justify-content:space-between;">
+          <small id="privacy-note" class="muted">We respect your privacy. We'll never share your info.</small>
+          <button class="btn" type="submit">Send message</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <div class="container row" style="justify-content:space-between; align-items:center;">
+      <p>© <span id="year"></span> Acme, Inc.</p>
+      <p class="muted">Crafted with ♥ — <a href="#top">Back to top</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle for small screens
+    const header = document.querySelector('header .container');
+    const toggle = document.getElementById('menuToggle');
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        const open = header.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    }
+    // Set copyright year
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // Accessible focus ring for inputs
+    document.querySelectorAll('input,textarea,button,a').forEach(el => {
+      el.addEventListener('focus', () => {
+        el.style.outline = `2px solid var(--ring)`;
+        el.style.outlineOffset = '2px';
+      });
+      el.addEventListener('blur', () => {
+        el.style.outline = 'none';
+        el.style.outlineOffset = '0';
+      });
+    });
+  </script>
+</body>
+</html>
